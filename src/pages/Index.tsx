@@ -1,12 +1,22 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import { useState } from 'react';
+import { Header } from '@/components/Header';
+import { MainDashboard } from '@/components/MainDashboard';
+import { ConfigPanel } from '@/components/ConfigPanel';
+import { StatisticsPanel } from '@/components/StatisticsPanel';
 
 const Index = () => {
+  const [activeView, setActiveView] = useState<'dashboard' | 'config' | 'stats'>('dashboard');
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background text-foreground">
+      <Header activeView={activeView} onViewChange={setActiveView} />
+      
+      <main className="h-[calc(100vh-5rem)]">
+        {activeView === 'dashboard' && <MainDashboard />}
+        {activeView === 'config' && <ConfigPanel />}
+        {activeView === 'stats' && <StatisticsPanel />}
+      </main>
     </div>
   );
 };
