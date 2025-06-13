@@ -13,39 +13,36 @@ export const RecentActivity = () => {
   ];
 
   return (
-    <Card className="p-6">
-      <h3 className="text-xl font-semibold mb-4">最近分拣记录</h3>
+    <Card className="p-4 h-full flex flex-col">
+      <h3 className="text-lg font-semibold mb-4">最近分拣记录</h3>
       
-      <ScrollArea className="h-64">
+      <ScrollArea className="flex-1">
         <div className="space-y-3">
           {activities.map((activity) => (
-            <div key={activity.id} className="flex items-center justify-between p-3 bg-secondary/30 rounded-lg">
-              <div className="flex items-center space-x-4">
-                <div className="text-xs text-muted-foreground font-mono w-20">
+            <div key={activity.id} className="p-3 bg-secondary/30 rounded-lg">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs text-muted-foreground font-mono">
                   {activity.time}
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center space-x-2">
-                    <span className="font-medium">{activity.hotel}</span>
-                    <span className="text-muted-foreground">•</span>
-                    <span>{activity.type}</span>
-                  </div>
+                </span>
+                <div className={`w-2 h-2 rounded-full ${
+                  activity.status === 'success' ? 'bg-green-500' : 'bg-red-500'
+                }`}></div>
+              </div>
+              
+              <div className="space-y-1">
+                <div className="text-sm font-medium">{activity.hotel}</div>
+                <div className="text-xs text-muted-foreground">{activity.type}</div>
+                <div className="flex items-center justify-between">
                   <div className="text-xs text-muted-foreground font-mono">
                     {activity.rfid}
                   </div>
+                  <Badge 
+                    className={`outlet-${activity.outlet} text-xs`}
+                    variant="secondary"
+                  >
+                    出口 {activity.outlet}
+                  </Badge>
                 </div>
-              </div>
-              
-              <div className="flex items-center space-x-2">
-                <Badge 
-                  className={`outlet-${activity.outlet}`}
-                  variant="secondary"
-                >
-                  出口 {activity.outlet}
-                </Badge>
-                <div className={`w-3 h-3 rounded-full ${
-                  activity.status === 'success' ? 'bg-green-500' : 'bg-red-500'
-                }`}></div>
               </div>
             </div>
           ))}

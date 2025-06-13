@@ -33,46 +33,46 @@ export const MainDashboard = () => {
   }, [isRunning]);
 
   return (
-    <div className="p-8 space-y-8">
-      {/* Control Panel */}
-      <Card className="p-6">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
+    <div className="h-full p-6 grid grid-cols-12 gap-6">
+      {/* Left Column - Control and RFID */}
+      <div className="col-span-3 space-y-6">
+        {/* Control Panel */}
+        <Card className="p-6">
+          <div className="space-y-4">
             <div className="flex items-center space-x-2">
               <div className={`w-4 h-4 rounded-full ${isRunning ? 'bg-green-500' : 'bg-red-500'}`}></div>
               <span className="text-lg font-medium">
-                设备状态: {isRunning ? '运行中' : '已停止'}
+                {isRunning ? '运行中' : '已停止'}
               </span>
             </div>
-            <Badge variant="secondary" className="text-base px-4 py-2">
-              当前策略: 酒店+类别分拣
+            <Badge variant="secondary" className="text-sm px-3 py-2 w-full justify-center">
+              酒店+类别分拣
             </Badge>
+            <Button
+              onClick={() => setIsRunning(!isRunning)}
+              variant={isRunning ? 'destructive' : 'default'}
+              className="h-14 w-full text-lg"
+            >
+              {isRunning ? '停止分拣' : '开始分拣'}
+            </Button>
           </div>
-          
-          <Button
-            onClick={() => setIsRunning(!isRunning)}
-            variant={isRunning ? 'destructive' : 'default'}
-            className="h-12 px-8 text-base"
-          >
-            {isRunning ? '停止分拣' : '开始分拣'}
-          </Button>
-        </div>
-      </Card>
+        </Card>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* RFID Reader Section */}
-        <div className="lg:col-span-1">
+        {/* RFID Reader */}
+        <div className="flex-1">
           <RFIDReader currentItem={currentItem} isRunning={isRunning} />
-        </div>
-
-        {/* Outlet Status Section */}
-        <div className="lg:col-span-2">
-          <OutletStatus />
         </div>
       </div>
 
-      {/* Recent Activity */}
-      <RecentActivity />
+      {/* Center Column - Outlet Status */}
+      <div className="col-span-6">
+        <OutletStatus />
+      </div>
+
+      {/* Right Column - Recent Activity */}
+      <div className="col-span-3">
+        <RecentActivity />
+      </div>
     </div>
   );
 };
